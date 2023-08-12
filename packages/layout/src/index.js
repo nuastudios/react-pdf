@@ -17,13 +17,14 @@ import resolvePercentHeight from './steps/resolvePercentHeight';
 import resolveLinkSubstitution from './steps/resolveLinkSubstitution';
 
 const layout = asyncCompose(
+  resolveSvg,
+  resolveAssets,
+  resolvePagination,
   resolveZIndex,
   resolveOrigins,
-  resolvePagination,
   resolveTextLayout,
   resolvePercentRadius,
   resolveDimensions,
-  resolveSvg,
   resolveAssets,
   resolveInheritance,
   resolvePercentHeight,

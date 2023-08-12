@@ -15,6 +15,7 @@ import shouldNodeBreak from '../node/shouldBreak';
 import resolveTextLayout from './resolveTextLayout';
 import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
+import resolveStyles from './resolveStyles';
 
 const isText = node => node.type === P.Text;
 
@@ -32,8 +33,9 @@ const isDynamic = node => !isNil(node.props?.render);
 
 const relayoutPage = compose(
   resolveTextLayout,
-  resolveInheritance,
   resolvePageDimensions,
+  resolveInheritance,
+  resolveStyles,
 );
 
 const warnUnavailableSpace = node => {
@@ -164,7 +166,7 @@ const resolveDynamicNodes = (props, node) => {
 
   // We reset dynamic text box so it can be computed again later on
   const resetHeight = isNodeDynamic && isText(node);
-  const box = resetHeight ? { ...node.box, height: 0 } : node.box;
+  const box = resetHeight ? { ...node.box, height: 0 } : {};
 
   const children = resolveChildren(node.children);
   const lines = isNodeDynamic ? null : node.lines;
