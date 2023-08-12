@@ -54,7 +54,10 @@ const merge = (inheritedStyles, style) => {
  * @returns {Object} node with styles merged
  */
 const mergeStyles = inheritedStyles => node => {
-  const style = merge(inheritedStyles, node.style || {});
+  const style = merge(
+    inheritedStyles,
+    Array.isArray(node.style) ? merge(...node.style) : node.style || {},
+  );
   return Object.assign({}, node, { style });
 };
 
