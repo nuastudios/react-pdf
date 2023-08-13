@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "@react-pdf/font": "^2.3.6",
-    "@react-pdf/layout": "^3.6.2",
+    "@react-pdf/layout": "https://github.com/nuastudios/react-pdf/raw/fix/renderer/packages/layout/react-pdf-layout-v3.6.2.tgz",
     "@react-pdf/pdfkit": "^3.0.2",
     "@react-pdf/primitives": "^3.0.0",
     "@react-pdf/render": "^3.2.6",
