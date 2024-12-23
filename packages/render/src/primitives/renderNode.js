@@ -12,6 +12,8 @@ import setLink from '../operations/setLink';
 import clipNode from '../operations/clipNode';
 import transform from '../operations/transform';
 import setDestination from '../operations/setDestination';
+import renderTextInput from './form/renderTextInput';
+import renderFormField, { cleanUpFormField } from './form/renderFormField';
 
 const isRecursiveNode = (node) => node.type !== P.Text && node.type !== P.Svg;
 
@@ -23,6 +25,7 @@ const renderChildren = (ctx, node, options) => {
   }
 
   const children = node.children || [];
+  // eslint-disable-next-line no-use-before-define
   const renderChild = (child) => renderNode(ctx, child, options);
 
   children.forEach(renderChild);
@@ -37,6 +40,12 @@ const renderFns = {
   [P.Canvas]: renderCanvas,
   [P.Svg]: renderSvg,
   [P.Link]: setLink,
+  [P.FormField]: renderFormField,
+  [P.TextInput]: renderTextInput,
+};
+
+const cleanUpFns = {
+  [P.FormField]: cleanUpFormField,
 };
 
 const renderNode = (ctx, node, options) => {
@@ -58,6 +67,10 @@ const renderNode = (ctx, node, options) => {
   if (renderFn) renderFn(ctx, node, options);
 
   if (shouldRenderChildren) renderChildren(ctx, node, options);
+
+  const cleanUpFn = cleanUpFns[node.type];
+
+  if (cleanUpFn) cleanUpFn(ctx, node, options);
 
   setDestination(ctx, node);
   renderDebug(ctx, node);

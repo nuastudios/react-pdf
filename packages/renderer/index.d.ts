@@ -235,6 +235,53 @@ declare namespace ReactPDF {
     React.PropsWithChildren<LinkProps>
   > {}
 
+  interface FormCommonProps extends NodeProps {
+    name?: string;
+    required?: boolean;
+    noExport?: boolean;
+    readOnly?: boolean;
+    value?: number | string;
+    defaultValue?: number | string;
+  }
+
+  interface FormFieldProps extends NodeProps {
+    name: string;
+  }
+
+  export class FormField extends React.Component<
+    React.PropsWithChildren<FormFieldProps>
+  > {}
+
+  // see http://pdfkit.org/docs/forms.html#text_field_formatting
+  interface TextInputFormatting {
+    type:
+      | 'date'
+      | 'time'
+      | 'percent'
+      | 'number'
+      | 'zip'
+      | 'zipPlus4'
+      | 'phone'
+      | 'ssn';
+    param?: string;
+    nDec?: number;
+    sepComma?: boolean;
+    negStyle?: 'MinusBlack' | 'Red' | 'ParensBlack' | 'ParensRed';
+    currency?: string;
+    currencyPrepend?: boolean;
+  }
+
+  // see http://pdfkit.org/docs/forms.html#text_field_formatting
+  interface TextInputProps extends FormCommonProps {
+    align?: 'left' | 'center' | 'right';
+    multiline?: boolean;
+    password?: boolean;
+    noSpell?: boolean;
+    format?: TextInputFormatting;
+  }
+
+  export class TextInput extends React.Component<TextInputProps> {}
+
   interface NoteProps extends NodeProps {
     children: string;
   }
